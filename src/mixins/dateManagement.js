@@ -1,12 +1,21 @@
 export default {
     methods: {
-        currentDay() {
-            let date = new Date()
-            return date.getDate()
+        currentTimeMillis() {
+            let currentMillis = new Date()
+            return currentMillis.getTime()
         },
+        currentDay() {
+            let currentDay = new Date()
+            return currentDay.getDate()
+        },
+        mixinApptDayMillis(apptDate) {
+            let apptMillis = new Date(apptDate)
+            return apptMillis.getTime(apptMillis)
+        },
+
         mixinDayNonOrdinal(fullDate) {
-            let date = new Date(fullDate);
-            return ("0" + date.getDate()).slice(-2)
+            let apptDate = new Date(fullDate);
+            return ("0" + apptDate.getDate()).slice(-2)
         },
         mixinSubstringDate(fullDate) {
             const monthNamesLong = [
@@ -32,7 +41,7 @@ export default {
                 shortApptMonth: monthNamesShort[date.getMonth()],
                 day: ("0" + date.getDate()).slice(-2) + this.ordinalDay(("0" + date.getDate()).slice(-2)),
 
-                time: Math.abs(date.getHours() - 12) +
+                time: Math.abs(date.getHours() > 12 ? date.getHours() - 12 : date.getHours()) +
                     ":" +
                     ("0" + date.getMinutes()).slice(-2) +
                     " " +

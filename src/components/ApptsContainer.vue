@@ -1,11 +1,18 @@
 <template>
   <div>
     Today
-    <section v-for="appointment in todayAppts" :key="appointment.id">
+    <section
+      v-for="appointment in todayArr()"
+      :key="appointment.id"
+      @click="setClickedAsCurrentAppt(appointment)"
+    >
       <appts-container-card :apptData="appointment"/>
-    </section>
-    Tomorrow
-    <section v-for="appointment in upcomingAppts" :key="appointment.id">
+    </section>Upcoming
+    <section
+      v-for="appointment in upcomingArr()"
+      :key="appointment.id"
+      @click="setClickedAsCurrentAppt(appointment)"
+    >
       <appts-container-card :apptData="appointment"/>
     </section>
     <button @click="increaseFetch">fetch more</button>
@@ -14,9 +21,10 @@
 
 <script>
 import ApptsContainerCard from "../components/ApptsContainerCard";
-import dateMixin from "./../mixins/dateManagement.js"
+import dateMixin from "./../mixins/dateManagement.js";
+
 export default {
-  mixins:[dateMixin],
+  mixins: [dateMixin],
   name: "Appts",
   components: {
     ApptsContainerCard
@@ -27,32 +35,29 @@ export default {
     },
     apptCount() {
       return this.$store.getters.getFetchStart;
-    },
-    todayAppts() {
-      return this.todayArr();
-    },
-    upcomingAppts(){
-      console.log(this.upcomingArr());
-      
-      return this.upcomingArr();
     }
-  },
-  created() {
-    this.$store.dispatch("fetchAppts", this.apptCount);
   },
   methods: {
     increaseFetch() {
       this.$store.dispatch("fetchNextTen"),
         this.$store.dispatch("fetchAppts", this.apptCount);
     },
+    setClickedAsCurrentAppt(appt) {
+      this.$store.dispatch("commitClickedAppt", appt);
+      this.$store.dispatch("toggleModal", true);
+    },
     todayArr() {
       return this.$store.getters.getAppts.filter(
-        appt => this.mixinDayNonOrdinal(appt.appointmentStart) == this.currentDay()
+        appt =>
+          this.mixinDayNonOrdinal(appt.appointmentStart) == this.currentDay() &&
+          this.mixinApptDayMillis(appt.appointmentStart) >
+            this.currentTimeMillis()
       );
     },
     upcomingArr() {
       return this.$store.getters.getAppts.filter(
-        appt => this.mixinDayNonOrdinal(appt.appointmentStart) != this.currentDay()
+        appt =>
+          this.mixinDayNonOrdinal(appt.appointmentStart) != this.currentDay()
       );
     }
   }

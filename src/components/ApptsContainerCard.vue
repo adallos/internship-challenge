@@ -1,18 +1,18 @@
 <template>
-  <div>
+  <div >
     <card-info :apptData="apptData" :class="cardState()"/>
-    <span></span>
   </div>
 </template>
 
 <script>
-import ApptsContainerCardInfoVue from "./ApptsContainerCardInfo.vue";
+import ApptsContainerCardInfo from "./ApptsContainerCardInfo.vue";
+
 export default {
   props: {
     apptData: {}
   },
   components: {
-    CardInfo: ApptsContainerCardInfoVue
+    CardInfo: ApptsContainerCardInfo,
   },
   methods: {
     cardState() {

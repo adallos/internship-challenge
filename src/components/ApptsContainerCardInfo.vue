@@ -1,23 +1,23 @@
 <template>
   <div class="single-appt">
     <div class="single-appt__apptItem--timeInfo">
-      <span class="single-appt__apptItem--shortDate">{{shortMonth}} {{dateDay}}</span>
-      <span class="single-appt__apptItem--blockDisplay">{{dateTime}}</span>
-      <span class="single-appt__apptItem--blockDisplay">{{apptDuration}}</span>
+      <span class="single-appt__apptItem--shortDate">{{getShortMonth()}} {{getDateDay()}}</span>
+      <span class="single-appt__apptItem--blockDisplay">{{getDateTime()}}</span>
+      <span class="single-appt__apptItem--blockDisplay">{{apptDuration()}}</span>
     </div>
     <div class="single-appt__apptItem">
       <div class="single-appt__apptItem--attendeeInfo">
         <img :src="apptData.avatar" class="single-appt__apptItem--itemImage">
         <div class="single-appt__apptItem--colItem">
-          <span>{{fullName}}</span>
+          <span>{{getFullName()}}</span>
           <span>
             <span class="icon-button material-icons">location_on</span>
-            {{apptData.location.place}}
+            <span>{{apptData.location.place}}</span>
           </span>
         </div>
       </div>
       <div class="single-appt__apptItem--longDate">
-        <span>{{longMonth}} {{dateDay}}</span>
+        <span>{{getLongMonth()}} {{getDateDay()}}</span>
         <colored-text-status :textStatus="apptData.status"/>
       </div>
       <div class="single-appt__apptItem--cardActions">
@@ -43,21 +43,29 @@ export default {
   props: {
     apptData: {}
   },
-  computed: {
-    fullName() {
+  computed: {},
+  methods: {
+    getLongMonth() {
+      return this.mixinSubstringDate(this.apptData.appointmentStart)
+        .longApptMonth;
+    },
+    getFullName() {
       return this.apptData.firstName + " " + this.apptData.lastName;
     },
-    longMonth() {
-      return this.mixinSubstringDate(this.apptData.appointmentStart).longApptMonth;
-    },
-    shortMonth() {
-      return this.getDateObj(this.apptData.appointmentStart).shortApptMonth;
-    },
-    dateDay() {
+    getDateDay() {
       return this.getDateObj(this.apptData.appointmentStart).day;
     },
-    dateTime() {
+    getDateObj(apptStart) {
+      return this.mixinSubstringDate(apptStart);
+    },
+    getShortMonth() {
+      return this.getDateObj(this.apptData.appointmentStart).shortApptMonth;
+    },
+    getDateTime() {
       return this.getDateObj(this.apptData.appointmentStart).time;
+    },
+    duration(apptStart, apptEnd) {
+      return this.durationMixin(apptStart, apptEnd);
     },
     apptDuration() {
       return (
@@ -66,14 +74,6 @@ export default {
           this.apptData.appointmentEnd
         ) + " minutes"
       );
-    }
-  },
-  methods: {
-    getDateObj(apptStart) {
-      return this.mixinSubstringDate(apptStart);
-    },
-    duration(apptStart, apptEnd) {
-      return this.durationMixin(apptStart, apptEnd);
     }
   }
 };
