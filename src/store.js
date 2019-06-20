@@ -7,23 +7,25 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         appts: [],
+        appt: {},
         nextTenAppts: [],
         fetchStart: 20,
-        selectedAppt: ''
+        selectedAppt: '',
+        modalVisibility: false,
+        isForm: false
     },
     getters: {
         getAppts(state) {
             return state.appts
         },
+        getSelectedAppt(state) {
+            return state.appt
+        },
         getFetchStart(state) {
             return state.fetchStart
         },
-        selectedAppt(state) {
-            return (apptId) => {
-                return state.appts.find((apptId) => {
-                    return apptId.id === apptId
-                })
-            }
+        getModalVisibility(state) {
+            return state.modalVisibility
         }
     },
     mutations: {
@@ -33,32 +35,53 @@ export default new Vuex.Store({
         setAppts(state, appts) {
             return state.appts = appts
         },
+        setSidebarAppt(state, appt) {
+            return state.appt = appt
+        },
+        setModalVisible(state, isVisible) {
+            return state.modalVisibility = isVisible
+        },
+
+        setFieldsToForm(state, isForm) {
+            return state.isForm = !state.isForm;
+        }
     },
     actions: {
         fetchAppts({ commit }, payload) {
-            const nextTenAppts = []
             let d = new Date()
             let currentTime = `${d.getFullYear()}-${('0' + (d.getMonth() + 1)).slice(-2)}-${('0' + (d.getDate())).slice(-2)} ${('0' + (d.getHours() + 1)).slice(-2)}:${('0' + (d.getMinutes())).slice(-2)}:${('0' + (d.getSeconds() + 1)).slice(-2)}`
 
-            db.collection('appts')
-                .where('appointmentStart', '>=', currentTime)
-                .orderBy('appointmentStart')
+            db.collection("appts")
+                .where("appointmentStart", ">=", currentTime)
+                .orderBy("appointmentStart", "asc")
                 .limit(payload)
                 .get()
                 .then(snapshot => {
-                    let lastVisible = snapshot.docs[snapshot.docs.length - 1];
+                    const nextTenAppts = []
                     snapshot.forEach(document => {
                         let appt = document.data()
                         appt.id = document.id;
                         nextTenAppts.push(appt)
                     })
+                    commit('setAppts', nextTenAppts)
+                    commit('setSidebarAppt', nextTenAppts[0]);
                 })
-            commit('setAppts', nextTenAppts)
-
-
         },
+
         fetchNextTen(context) {
             context.commit('increaseFetchLimit')
         },
-    }
+
+        commitClickedAppt({ commit }, clickedAppt) {
+            commit('setSidebarAppt', clickedAppt)
+        },
+
+        toggleModal({ commit }, isVisible) {
+            commit('setModalVisible', isVisible)
+        },
+
+        toggleEdition({ commit }, isEditable) {
+            commit('setFieldsToForm', isEditable)
+        }
+    },
 })

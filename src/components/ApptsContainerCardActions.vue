@@ -1,7 +1,16 @@
 <template>
-  <div class="buttonsContainer">
-    <div v-for="button in buttonsRendering()" :key="button">
-      <base-button :buttonType="button"/>
+  <div>
+    <div v-if="this.isIcon" class="buttonsContainer">
+      <div v-for="button in iconsRendering()" :key="button">
+        <base-button :buttonType="button"/>
+      </div>
+    </div>
+    <div
+      v-else-if="this.apptState != 'cancelled'"
+      v-for="(text, index) in textRendering()"
+      :key="index"
+    >
+      <button>{{text}}</button>
     </div>
   </div>
 </template>
@@ -12,25 +21,37 @@ export default {
   components: {
     BaseButton
   },
-  props: ["apptState"],
+  props: ["apptState", "isIcon"],
   methods: {
-    buttonsRendering() {
+    textRendering() {
       switch (this.apptState) {
         case "confirmed":
-          return ["icon-edit", "icon-cancel"];
-          this.buttonsAmount = 2;
+          return ["Cancel Appointment"];
           break;
         case "pending":
-          return ["icon-confirm", "icon-cancel"];
-          this.buttonsAmount = 2;
+          return ["Confirm Appointment", "Cancel Appointment"];
           break;
         case "cancelled":
           return [""];
-          this.buttonsAmount = 0;
           break;
         default:
           return [""];
-          this.buttonsAmount = 0;
+          break;
+      }
+    },
+    iconsRendering() {
+      switch (this.apptState) {
+        case "confirmed":
+          return ["icon-edit", "icon-cancel"];
+          break;
+        case "pending":
+          return ["icon-confirm", "icon-cancel"];
+          break;
+        case "cancelled":
+          return [""];
+          break;
+        default:
+          return [""];
           break;
       }
     }

@@ -1,14 +1,17 @@
 <template>
   <div>
     <appts-container/>
+    <sidebar-container :isVisible="false"/>
   </div>
 </template>
 
 <script>
 import ApptsContainer from "../components/ApptsContainer";
+import SidebarContainer from "../components/SidebarContainer";
 export default {
   components: {
-    ApptsContainer
+    ApptsContainer,
+    SidebarContainer
   },
   name: "home",
   computed: {
