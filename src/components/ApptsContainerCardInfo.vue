@@ -21,7 +21,7 @@
         <colored-text-status :textStatus="apptData.status"/>
       </div>
       <div class="single-appt__apptItem--cardActions">
-        <card-actions :apptState="apptData.status"/>
+        <card-actions :apptState="apptData.status" :isIcon="true"/>
       </div>
     </div>
   </div>

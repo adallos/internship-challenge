@@ -11,7 +11,8 @@ export default new Vuex.Store({
         nextTenAppts: [],
         fetchStart: 20,
         selectedAppt: '',
-        modalVisibility: false
+        modalVisibility: false,
+        isForm: false
     },
     getters: {
         getAppts(state) {
@@ -39,6 +40,10 @@ export default new Vuex.Store({
         },
         setModalVisible(state, isVisible) {
             return state.modalVisibility = isVisible
+        },
+
+        setFieldsToForm(state, isForm) {
+            return state.isForm = !state.isForm;
         }
     },
     actions: {
@@ -73,6 +78,10 @@ export default new Vuex.Store({
 
         toggleModal({ commit }, isVisible) {
             commit('setModalVisible', isVisible)
+        },
+
+        toggleEdition({ commit }, isEditable) {
+            commit('setFieldsToForm', isEditable)
         }
     },
 })

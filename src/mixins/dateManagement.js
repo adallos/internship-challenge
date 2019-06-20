@@ -39,7 +39,7 @@ export default {
             let dateObj = {
                 longApptMonth: monthNamesLong[date.getMonth()],
                 shortApptMonth: monthNamesShort[date.getMonth()],
-                day: ("0" + date.getDate()).slice(-2) + this.ordinalDay(("0" + date.getDate()).slice(-2)),
+                day: date.getDate() + this.ordinalDay(("0" + date.getDate()).slice(-2)),
 
                 time: Math.abs(date.getHours() > 12 ? date.getHours() - 12 : date.getHours()) +
                     ":" +
