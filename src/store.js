@@ -50,9 +50,10 @@ export default new Vuex.Store({
         fetchAppts({ commit }, payload) {
             let d = new Date()
             let currentTime = `${d.getFullYear()}-${('0' + (d.getMonth() + 1)).slice(-2)}-${('0' + (d.getDate())).slice(-2)} ${('0' + (d.getHours() + 1)).slice(-2)}:${('0' + (d.getMinutes())).slice(-2)}:${('0' + (d.getSeconds() + 1)).slice(-2)}`
+            console.log(currentTime);
 
             db.collection("appts")
-                .where("appointmentStart", ">=", currentTime)
+                .where("appointmentStart", ">", currentTime)
                 .orderBy("appointmentStart", "asc")
                 .limit(payload)
                 .get()

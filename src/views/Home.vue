@@ -1,13 +1,14 @@
 <template>
-  <div>
+  <div class="outer-router-container">
     <appts-container/>
-    <sidebar-container :isVisible="false"/>
+    <sidebar-container/>
   </div>
 </template>
 
 <script>
 import ApptsContainer from "../components/ApptsContainer";
 import SidebarContainer from "../components/SidebarContainer";
+
 export default {
   components: {
     ApptsContainer,
@@ -34,15 +35,5 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.icon-button {
-  background-color: transparent;
-  border-style: none;
-  color: #ababab;
-  outline: none;
-  font-size: 18px;
-  &:hover {
-    color: #7e7e7e;
-  }
-}
+<style scoped lang="scss">
 </style>

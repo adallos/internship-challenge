@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div>
     <card-info :apptData="apptData" :class="cardState()"/>
   </div>
 </template>
@@ -12,7 +12,7 @@ export default {
     apptData: {}
   },
   components: {
-    CardInfo: ApptsContainerCardInfo,
+    CardInfo: ApptsContainerCardInfo
   },
   methods: {
     cardState() {
