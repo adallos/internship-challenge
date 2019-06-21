@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  props: ["fieldLabel", "primaryInfo", "secondaryInfo"],
+  props: ["fieldLabel", "confirmationType"],
   methods: {}
 };
 </script>

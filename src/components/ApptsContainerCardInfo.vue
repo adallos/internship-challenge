@@ -81,15 +81,17 @@ export default {
 
 <style scoped lang="scss">
 .single-appt {
-  width: 90%;
   height: 100px;
   border-radius: 12px;
   box-shadow: rgba(0, 0, 0.4, 0.3) 0 0 5px;
-  margin: 20px auto;
+  margin: 20px;
   padding: 15px;
   box-sizing: border-box;
   display: flex;
   justify-content: space-around;
+  &:hover {
+    box-shadow: rgba(0, 0, 0.4, 0.3) 0 0 10px;
+  }
   &__apptItem {
     display: flex;
     flex-flow: row nowrap;
@@ -144,10 +146,6 @@ export default {
   }
 }
 
-.single-appt:hover {
-  box-shadow: rgba(0, 0, 0.4, 0.3) 0 0 10px;
-}
-
 @media (min-width: $tablet-mq) {
   .single-appt {
     &__apptItem {
@@ -172,6 +170,7 @@ export default {
 
 @media (min-width: $pc-mq) {
   .single-appt {
+    margin: 20px 0px;
     &__apptItem {
       width: 75%;
       &--shortDate {
