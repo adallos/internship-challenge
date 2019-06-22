@@ -81,14 +81,12 @@ export default {
 .main-appts-container {
   display: flex;
 }
-
 .appts {
   width: 100%;
   background-color: #fbfbfb;
   position: relative;
   top: 65px;
 }
-
 .navbar {
   background: white;
 }
@@ -101,23 +99,6 @@ export default {
   .all-appointments {
     box-sizing: border-box;
     width: 73%;
-  }
-}
-
-@media (min-width: $pc-mq) {
-  .month-filters-container,
-  .all-appointments {
-    padding: 20px;
-    box-sizing: border-box;
-    width: 74%;
-  }
-
-  .month-filters-container {
-    &__month-bdn {
-      display: none;
-    }
-    &__filters {
-    }
   }
 }
 </style>

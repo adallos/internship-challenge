@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import db from './firebase'
+import router from './router'
 
 Vue.use(Vuex);
 
@@ -9,10 +10,12 @@ export default new Vuex.Store({
         appts: [],
         appt: {},
         nextTenAppts: [],
-        fetchStart: 20,
+        fetchStart: 15,
         selectedAppt: '',
         modalVisibility: false,
-        isForm: false
+        isForm: false,
+        confirmationModal: false,
+        actionType: ''
     },
     getters: {
         getAppts(state) {
@@ -26,11 +29,17 @@ export default new Vuex.Store({
         },
         getModalVisibility(state) {
             return state.modalVisibility
+        },
+        getActionType(state) {
+            return state.actionType
+        },
+        getFieldsToForm(state) {
+            return state.isForm
         }
     },
     mutations: {
         increaseFetchLimit(state) {
-            return state.fetchStart += 20
+            return state.fetchStart += 15
         },
         setAppts(state, appts) {
             return state.appts = appts
@@ -44,9 +53,16 @@ export default new Vuex.Store({
 
         setFieldsToForm(state, isForm) {
             return state.isForm = !state.isForm;
+        },
+
+        actionType(state, actionType) {
+            return state.actionType = actionType;
         }
     },
     actions: {
+        fetchByMonth({ commit }, payload) {
+
+        },
         fetchAppts({ commit }, payload) {
             let d = new Date()
             let currentTime = `${d.getFullYear()}-${('0' + (d.getMonth() + 1)).slice(-2)}-${('0' + (d.getDate())).slice(-2)} ${('0' + (d.getHours() + 1)).slice(-2)}:${('0' + (d.getMinutes())).slice(-2)}:${('0' + (d.getSeconds() + 1)).slice(-2)}`
@@ -83,6 +99,18 @@ export default new Vuex.Store({
 
         toggleEdition({ commit }, isEditable) {
             commit('setFieldsToForm', isEditable)
-        }
+        },
+
+        toggleAction({ commit }, actionType) {
+            commit('actionType', actionType)
+        },
+
+        updateStatus({ commit, state }, newStatus) {
+            db.collection("appts").doc(state.appt.id).update({
+                status: newStatus
+            }).then(() => {
+                alert(`Appointment ${newStatus} ${state.appt.status} sucessfully`)
+            })
+        },
     },
 })

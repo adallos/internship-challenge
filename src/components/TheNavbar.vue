@@ -21,7 +21,6 @@ export default {};
   flex-flow: column nowrap;
   width: 50px;
   border-right: #cecece 1px solid;
-  box-shadow: 10px 0 #7e7e7e;
   width: 70px;
   color: $color-light;
   &__brand-icon {
