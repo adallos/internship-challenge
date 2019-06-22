@@ -46,14 +46,12 @@
 </template>
 
 <script>
-import SidebarContainerAppt from "./SidebarContainerAppt";
 import coloredStatus from "./UI/ColoredStatus";
 import dateManagement from "../mixins/dateManagement";
 import cardActions from "./ApptsContainerCardActions";
 import monthBreakdown from "./MonthBdnContainer";
 export default {
   components: {
-    apptRender: SidebarContainerAppt,
     coloredStatus,
     cardActions,
     monthBreakdown
@@ -112,35 +110,25 @@ export default {
     &--month-bdn {
       display: none;
     }
-    &--cancelled {
-      border-radius: 15px;
-      background-color: #fefefe;
-      margin: auto;
-      padding: 20px;
-      border: 5px solid $app-red;
-      width: 70%;
-      position: relative;
-      top: 59px;
-    }
-    &--confirmed {
-      border-radius: 15px;
-      background-color: #fefefe;
-      margin: auto;
-      padding: 20px;
-      border: 5px solid $app-blue;
-      width: 70%;
-      position: relative;
-      top: 59px;
-    }
+    &--cancelled,
+    &--confirmed,
     &--pending {
       border-radius: 15px;
       background-color: #fefefe;
       margin: auto;
       padding: 20px;
-      border: 5px solid $app-yellow;
       width: 70%;
       position: relative;
       top: 59px;
+    }
+    &--cancelled {
+      border: 5px solid $app-red;
+    }
+    &--confirmed {
+      border: 5px solid $app-blue;
+    }
+    &--pending {
+      border: 5px solid $app-yellow;
     }
   }
   &__close {
@@ -177,7 +165,7 @@ export default {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(243, 148, 148, 0.4);
+    background-color: rgba(0, 0, 0, 0.4);
     &__shortInfo {
       &--coffee-with {
         display: block;
@@ -196,26 +184,22 @@ export default {
       &--month-bdn {
         display: none;
       }
-      &--cancelled {
-        background-color: #fefefe;
-        margin: auto;
-        padding: 20px;
-        border: 5px solid $app-red;
-        width: 70%;
-        position: relative;
-      }
-      &--confirmed {
-        background-color: #fefefe;
-        margin: auto;
-        padding: 20px;
-        border: 5px solid $app-blue;
-        width: 70%;
-        position: relative;
-      }
+      &--cancelled,
+      &--confirmed,
       &--pending {
         background-color: #fefefe;
         margin: auto;
         padding: 20px;
+        width: 70%;
+        position: relative;
+      }
+      &--cancelled {
+        border: 5px solid $app-red;
+      }
+      &--confirmed {
+        border: 5px solid $app-blue;
+      }
+      &--pending {
         border: 5px solid $app-yellow;
         width: 70%;
         position: relative;

@@ -1,11 +1,16 @@
 <template>
-  <div class="buttonsContainer"></div>
+  <div :class="isVisible ? 'modal' : 'modal-hidden'"></div>
 </template>
 
 <script>
 export default {
   props: ["fieldLabel", "confirmationType"],
-  methods: {}
+  methods: {},
+  computed: {
+    isVisible() {
+      return this.$store.getters.getModalVisibility;
+    }
+  }
 };
 </script>
 
